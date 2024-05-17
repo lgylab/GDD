@@ -1,0 +1,35 @@
+#### general settings
+name: Test
+use_tb_logger: false
+model: SRModel
+scale: 4
+gpu_ids: [0]
+
+metrics: [psnr, ssim, lpips]
+
+datasets:
+  test1:
+    name: 2020Track1
+    mode: PairedDataset
+    data_type: lmdb
+    dataroot_src: ../../../data/track1-valid.lmdb
+    dataroot_tgt: ../../../data/track1-valid-gt.lmdb
+
+#### network structures
+networks:
+  netSR:
+    which_network: EDSR
+    setting:
+      nf: 64
+      nb: 16
+      res_scale: 1
+      upscale: 4
+    pretrain: 
+      path: ../../../checkpoints/220Track1/psnr/netwSR.pth
+      strict_load: true
+    # which_network: BicuBic
+    # setting:
+    #   upscale: 4
+    # pretrain: 
+    #   path: ~
+    #   strict_load: true
